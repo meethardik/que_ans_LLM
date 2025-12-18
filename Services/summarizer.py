@@ -5,7 +5,7 @@ from typing import Any, Dict, List
 def load_pdf():
     
     pdf_loader = DirectoryLoader(
-        "data/pdf", 
+        "Uploads", 
         glob="*.pdf", 
         loader_cls=PyMuPDFLoader, 
         show_progress= False)
@@ -21,6 +21,7 @@ def genreate_pdf_chunks(documents: Any,
     text_splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(model_name=model_name,
                                                                          chunk_size=chunk_size,
                                                                          chunk_overlap=chunk_size_overlap)
+    
     chunked_docs = text_splitter.split_documents(documents)
 
     chuked_pdf = []

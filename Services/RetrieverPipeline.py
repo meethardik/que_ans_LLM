@@ -3,8 +3,8 @@ from EmbeddingManager import EmbeddingManager
 from VectorStore import VectorStore
 from scipy.spatial import distance
 
-import summarizer as summarizer_object
-from EmbeddingManager import EmbeddingManager
+# import summarizer as summarizer_object
+# from EmbeddingManager import EmbeddingManager
 
 class RetrieverPipeline:
     
