@@ -40,6 +40,25 @@ class VectorStore:
             print(f"Error adding documents to the vector store collection '{self.collection_name}': {e}")
             raise e
 
+    @classmethod
+    def get_vector_collection(cls, collection_name: str, persist_directory: str):
+        try:
+
+            os.makedirs(persist_directory, exist_ok=True) # check if the directory exists, if not create it
+
+            # Initialize Chroma client
+            chroma_client = chromadb.PersistentClient(path=persist_directory)
+            
+            # Create or get collection
+            vector_collection = chroma_client.get_collection(
+                    name=collection_name,
+                )
+
+            return vector_collection
+        except Exception as e:
+            print(f"Error getting collection '{collection_name}': {e}")
+            raise e
+
     def _initialize_vector_store(self):
         try:
 
