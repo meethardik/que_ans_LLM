@@ -6,6 +6,7 @@ import time
 
 sys.path.append("Services")
 from Services.ProcessDocument import ProcessDocument
+from Services.ProcessSearchResults import ProcessSearchResults
 
 upload_dir = Path("Uploads")
 
@@ -48,6 +49,9 @@ def text_input_with_button() -> str:
         clicked = slt.button("Submit", use_container_width=True)
     if clicked:
         slt.session_state["last_submitted"] = user_text
+        process_query = ProcessSearchResults(query=user_text, top_k=3)
+        
+        slt.text_area("output_text", value=str(process_query.process_query_results()))
 
     return slt.session_state.get("last_submitted", "")
 

@@ -3,12 +3,14 @@ from EmbeddingManager import EmbeddingManager
 from VectorStore import VectorStore
 from scipy.spatial import distance
 
+import chromadb
+
 # import summarizer as summarizer_object
 # from EmbeddingManager import EmbeddingManager
 
 class RetrieverPipeline:
     
-    def __init__(self, vector_store: VectorStore, embeddings: EmbeddingManager):
+    def __init__(self, vector_store: chromadb.Collection, embeddings: EmbeddingManager):
         self.vector_store = vector_store
         self.embeddings = embeddings
 
@@ -32,8 +34,8 @@ class RetrieverPipeline:
             map_doc_score = {}
             final_retrieved_docs = []
 
-            if self.vector_store.collection:
-                results = self.vector_store.collection.query(query_embeddings = [query_embedding.tolist()], n_results=top_k)
+            if self.vector_store:
+                results = self.vector_store.query(query_embeddings = [query_embedding.tolist()], n_results=top_k)
                 
                 if (results['documents'] and len(results['documents']) > 0) and (results['ids'] and len(results['ids']) > 0) and (results['distances'] and len(results['distances']) > 0 and (results['metadatas']) and len(results['metadatas']) > 0):
                     documents_text = results['documents'][0]
